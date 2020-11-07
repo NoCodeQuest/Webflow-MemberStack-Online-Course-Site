@@ -14,7 +14,7 @@ MemberStack.onReady.then(async function(member) {
     var completedState = notCompletedClass;
     
     // loop all of the links
-		for(let l=0; l < links.length; l++){
+    for(let l=0; l < links.length; l++){
      	
       // setup the current link variables
       var link = links[l];
@@ -34,12 +34,12 @@ MemberStack.onReady.then(async function(member) {
           
           // break out of this for loop and
           // check the next link
-		      c = completedLessons.length;
+ 	  c = completedLessons.length;
           
         } else {
         
-        	// set completed state
-        	completedState = notCompletedClass;
+          // set completed state
+          completedState = notCompletedClass;
           
         } 
       }
@@ -51,16 +51,16 @@ MemberStack.onReady.then(async function(member) {
     
     // show the completed state
     function displayCompleted(lessonItem) {
-    	lessonItem.getElementsByClassName('loading')[0].style.display = 'none';
+      lessonItem.getElementsByClassName('loading')[0].style.display = 'none';
       lessonItem.getElementsByClassName('completed')[0].style.display = 'block';
-			lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'none';
+      lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'none';
     }
     
     // show the not completed state
     function displayNotCompleted(lessonItem) {
     	lessonItem.getElementsByClassName('loading')[0].style.display = 'none';
-			lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'block';
-			lessonItem.getElementsByClassName('completed')[0].style.display = 'none';
+	lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'block';
+	lessonItem.getElementsByClassName('completed')[0].style.display = 'none';
     }
 })
 </script>
