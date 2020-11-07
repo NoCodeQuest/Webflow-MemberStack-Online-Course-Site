@@ -1,17 +1,22 @@
 <script>
 MemberStack.onReady.then(async function(member) {
 
+	// setup
+	var loadingClass = 'loading'
+	var completedClass = 'completed';
+	var notCompletedClass = 'notcompleted';
+	var lessonItemClass = '.lessonitem';
+	var lessonsId = 'lessons';
+
+	// set default state
+	var completedState = notCompletedClass;
+
 	// fetch remote metadata
 	let metadata = await member.getMetaData()
 	var completedLessons = metadata.completed ? metadata.completed : [];
 
 	// get all of the lesson links listed (from CMS Collection)
-	var links = document.getElementById('lessons').getElementsByTagName('a');
-
-	// set completed state
-	var completedClass = 'completed';
-	var notCompletedClass = 'notcompleted';
-	var completedState = notCompletedClass;
+	var links = document.getElementById(lessonsId).getElementsByTagName('a');
 
 	// loop all of the links
 	for (let l = 0; l < links.length; l++) {
@@ -45,22 +50,22 @@ MemberStack.onReady.then(async function(member) {
 		}
 
 		// display completed state to screen
-		let lessonItem = link.closest('.lessonitem');
+		let lessonItem = link.closest(lessonItemClass);
 		(completedState === completedClass) ? displayCompleted(lessonItem): displayNotCompleted(lessonItem);
 	}
 
 	// show the completed state
 	function displayCompleted(lessonItem) {
-		lessonItem.getElementsByClassName('loading')[0].style.display = 'none';
-		lessonItem.getElementsByClassName('completed')[0].style.display = 'block';
-		lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'none';
+		lessonItem.getElementsByClassName(loadingClass)[0].style.display = 'none';
+		lessonItem.getElementsByClassName(completedClass)[0].style.display = 'block';
+		lessonItem.getElementsByClassName(notCompletedClass)[0].style.display = 'none';
 	}
 
 	// show the not completed state
 	function displayNotCompleted(lessonItem) {
-		lessonItem.getElementsByClassName('loading')[0].style.display = 'none';
-		lessonItem.getElementsByClassName('notcompleted')[0].style.display = 'block';
-		lessonItem.getElementsByClassName('completed')[0].style.display = 'none';
+		lessonItem.getElementsByClassName(loadingClass)[0].style.display = 'none';
+		lessonItem.getElementsByClassName(notCompletedClass)[0].style.display = 'block';
+		lessonItem.getElementsByClassName(completedClass)[0].style.display = 'none';
 	}
 })
 </script>
