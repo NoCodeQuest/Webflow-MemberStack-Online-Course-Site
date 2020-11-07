@@ -10,7 +10,7 @@ var notCompletedLink = document.getElementById('statusNotCompleted');
 var loadingSpinner = document.getElementById('loading');
 
 // toggle display
-function displayNotCompletedLink(){
+function displayNotCompletedLink() {
 	loadingSpinner.style.display = 'none';
 	notCompletedLink.style.display = 'block';
 	completedLink.style.display = 'none';
@@ -19,76 +19,79 @@ function displayNotCompletedLink(){
 // toggle display
 function displayCompletedLink() {
 	loadingSpinner.style.display = 'none';
-  completedLink.style.display = 'block';
+	completedLink.style.display = 'block';
 	notCompletedLink.style.display = 'none';
 }
 
 // toggle display
 function displayLoadingSpinner() {
 	loadingSpinner.style.display = 'block';
-  completedLink.style.display = 'none';
+	completedLink.style.display = 'none';
 	notCompletedLink.style.display = 'none';
 }
 
 // update completed status in remote datastore
 async function updateMetaData(urls, redirectTo) {
-  displayLoadingSpinner();
-  await user.updateMetaData({ completed: urls });
-  window.location = redirectTo;
+	displayLoadingSpinner();
+	await user.updateMetaData({
+		completed: urls
+	});
+	window.location = redirectTo;
 }
 
 // remove the current url
-completedLink.addEventListener('click', function (event) {
+completedLink.addEventListener('click', function(event) {
 	event.preventDefault();
-  
-  let currentIndex = completedUrls.indexOf(currentUrl);
-  if(currentIndex > -1) {
-  	let filteredUrls = completedUrls.filter(url => url != currentUrl);
-    updateMetaData(filteredUrls, notCompletedLink.href);
-  }
+
+	let currentIndex = completedUrls.indexOf(currentUrl);
+	if (currentIndex > -1) {
+		let filteredUrls = completedUrls.filter(url => url != currentUrl);
+		updateMetaData(filteredUrls, notCompletedLink.href);
+	}
 });
 
 // add the current url
-notCompletedLink.addEventListener('click', function (event) {
-  event.preventDefault();
-  
-  completedUrls.push(currentUrl);
-  updateMetaData(completedUrls, completedLink.href);
+notCompletedLink.addEventListener('click', function(event) {
+	event.preventDefault();
+
+	completedUrls.push(currentUrl);
+	updateMetaData(completedUrls, completedLink.href);
 });
 
 // display correct completed link
 MemberStack.onReady.then(async function(member) {
-    
-    // get members metadata
-    metadata = await member.getMetaData()
-    
-    // assign to outside scope
-    user = member;
-		
-    // get metadata key we're interested in
-		completedUrls = metadata.completed ? metadata.completed : [];
 
-    // loop all urls found in the JSON stored within MemberStack
-    for(let c=0; c <= completedUrls.length; c++) {
+	// get members metadata
+	metadata = await member.getMetaData()
 
-      // set the current url stored in MemberStack
-      let completedUrl = completedUrls[c];
+	// assign to outside scope
+	user = member;
 
-      // if the current url and stored url match
-      if(currentUrl === completedUrl){
+	// get metadata key we're interested in
+	completedUrls = metadata.completed ? metadata.completed : [];
 
-        // toggle display
-        displayCompletedLink();
-        
-        // break out of this for loop
-        c = completedUrls.length;
-        
-      } else {
-      	
-        // toggle display
-      	displayNotCompletedLink();
-        
-      }  
-    }
-});
+	// loop all urls found in the JSON stored within MemberStack
+	for (let c = 0; c <= completedUrls.length; c++) {
+
+		// set the current url stored in MemberStack
+		let completedUrl = completedUrls[c];
+
+		// if the current url and stored url match
+		if (currentUrl === completedUrl) {
+
+			// toggle display
+			displayCompletedLink();
+
+			// break out of this for loop
+			c = completedUrls.length;
+
+		} else {
+
+			// toggle display
+			displayNotCompletedLink();
+
+		}
+	}
+});	
+
 </script>
